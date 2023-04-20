@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+
+<div class="text-center">
+    @if (ViewBag.User is null)
+    {
+        <h1 class="display-4">Welcome</h1>
+        <div class="col s12 m6 offset-m3 center-align">
+            <a class="oauth-container btn darken-4 white black-text" href="@Url.Action("LineLogin", "Home")" style="text-transform:none">
+                <i class="fa-brands fa-line fa-2x mr-2" style="color: #7cd115;"></i>  Sign in with LineLogin
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="card " >
+            <div class="text-center"> <img src="@ViewBag.User.pictureUrl" class="rounded text-center" width="128" height="128" /></div>
+           
+            <div class="card-body">
+                <h5>Hi, @ViewBag.User.displayName</h5>
+                <p class="card-text">精通 OAuth 2.0 授權框架回家作業。</p>
+                @if (ViewBag.IsLineNotifyBinded)
+                {
+                    <a class="btn btn-warning" href="@Url.Action("RevokeLineNotify", "Home")" >取消 Line Notify 通知</a>
+                }
+                else
+                {
+                    <a class="btn btn-success" href="@Url.Action("BindLineNotify", "Home")">訂閱 Line Notify 通知</a>
+                }
+                <a class="btn btn-danger" href="@Url.Action("LineLogout", "Home")">登出</a>
+            </div>
+        </div>
+
+       
+    }
+</div>

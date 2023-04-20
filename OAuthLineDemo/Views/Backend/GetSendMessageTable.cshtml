@@ -1,0 +1,42 @@
+﻿@model List<OAuthLineDemo.Models.SendMsgRecordViewModel>
+
+@if(Model != null && Model.Count >0)
+{
+   <h3>發送紀錄</h3>
+    <div class="table-responsive shadow-sm p-3 mb-5 bg-white rounded">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                       訊息內容
+                    </th>
+                   
+                    <th>
+                        時間
+                    </th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Message)
+                        </td>
+                       
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreateDATE)
+                        </td>
+                      
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+}
+else
+{
+ <h3> 無紀錄!</h3>
+}

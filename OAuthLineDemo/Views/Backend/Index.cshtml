@@ -1,0 +1,88 @@
+﻿@model OAuthLineDemo.Models.SendMsgRecordViewModel
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+@*<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>*@
+
+<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+@*<script src="//ajax.aspnetcdn.com/ajax/mvc/4.0/jquery.validate.unobtrusive.min.js"></script>*@
+
+<div class="text-center">
+<h3>Line Notify 訊息發送</h3>
+    <input type="text" class="form-control" id="messageInput" placeholder="請輸入發送內容">
+    <br />
+        <div class="row">
+           
+            <div class="col-6">
+                <div class="d-grid">
+                  <button class="btn btn-primary" type="button" id="sendmsg" value="submit"><i class="fa-regular fa-paper-plane"></i> 送出</button>
+            </div>
+            </div>
+            <div class="col-6">
+
+                <div class="d-grid">
+                    
+                    <button class="btn btn-danger" type="button" id="senddel" value="submit"><i class="fa-regular fa-trash-can" style="color: #ffffff;"></i> 刪除紀錄</button>
+                </div>
+            </div>
+         
+        </div>
+        <br />
+        <hr />
+        <div class="row">
+            <div class="col">
+                <div id="theTable">
+                  @await Html.PartialAsync("GetSendMessageTable", Model)
+                </div>
+
+            </div>
+        </div>
+   
+</div>
+
+
+
+
+<script>
+    $(document).ready(function () {
+        $('#sendmsg').click(function () { ButtonSubmitEventHandler(); });
+        //senddel
+        $('#senddel').click(function () { ButtonDelEventHandler(); });
+    });
+
+    window.onload = function () {
+        ButtonSubmitEventHandler();
+    }
+
+
+    function ButtonSubmitEventHandler() {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("GetSendMessageTable", "Backend")",
+            data: {
+                MessageInput: $("#messageInput").val(),
+            },
+            dataType: 'html',
+            success: function (data) {
+                $("#theTable").html(data);
+            }
+        });
+
+        var input = $('#messageInput');
+        input.val('');
+    }
+
+function ButtonDelEventHandler() {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("DelSendMessageTable", "Backend")",
+            data: {
+                MessageInput: $("#messageInput").val(),
+            },
+            dataType: 'html',
+            success: function (data) {
+                $("#theTable").html(data);
+            }
+        });
+        var input = $('#messageInput');
+        input.val('');
+    }
+</script>
